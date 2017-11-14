@@ -8,19 +8,25 @@ MAINTAINER baber@iastate.edu
 SPACK_ROOT=/opt/spack
 export SPACK_ROOT
 export PATH=$SPACK_ROOT/bin:$PATH
+export TMPDIR=/tmp
 
 %runscript
 spack find 
 
 %post  
 export SPACK_ROOT=/opt/spack
-dnf -y install git python3 gcc curl gnupg2 sed
+export TMPDIR=/tmp
+dnf -y install git python3 gcc curl gnupg2 sed patch file
+dnf clean packages
 ln -f -s /usr/bin/python3 /usr/bin/python
-if [ -d "/opt/spack" ]; then
-  cd $SPACK_ROOT && git pull
-else
-  git clone https://github.com/spack/spack.git $SPACK_ROOT
-fi
+git clone https://github.com/spack/spack.git $SPACK_ROOT
 cp $SPACK_ROOT/etc/spack/defaults/config.yaml $SPACK_ROOT/etc/spack
-sed -i -e 's|install_tree: $spack/opt/spack|install_tree: $tmpdir/spack/|g' $SPACK_ROOT/etc/spack/defaults/config.yaml
+
+export SPACK_CONF_FILE=$SPACK_ROOT/etc/spack/config.yaml
+
+sed -i -e 's|install_tree: $spack/opt/spack|install_tree: ~/spack_packages/|g' $SPACK_CONF_FILE
+sed -i -e 's|source_cache: $spack/var/spack/cache|source_cache: $tempdir/var/spack/cache|g' $SPACK_CONF_FILE
+sed -i '/- \/nfs\/tmp2\/$user/d' $SPACK_CONF_FILE
+sed -i '/- $spack\/var\/spack\/stage/d' $SPACK_CONF_FILE
+sed -i -e 's|$spack/share/spack|\~/spack_modules/share/spack|g' $SPACK_CONF_FILE
 chmod -R 777 /opt/spack

@@ -1,0 +1,16 @@
+BootStrap: localimage
+From: ./spack-singularity.img
+
+%labels
+MAINTAINER baber@iastate.edu
+
+%runscript
+bowtie
+
+%post
+dnf clean all
+dnf -y install Lmod
+cd /opt/spack && git stash && git checkout feature/fastqvalidator-depfix
+/opt/spack/bin/spack install bowtie
+/opt/spack/share/spack/setup-env.sh
+module load bowtie

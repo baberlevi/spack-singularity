@@ -16,5 +16,3 @@ module avail
 %post
 dnf clean all
 dnf -y install Lmod 
-source /etc/profile.d/modules.sh
-source /opt/spack/share/spack/setup-env.sh

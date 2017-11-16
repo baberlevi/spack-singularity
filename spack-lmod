@@ -1,5 +1,5 @@
 BootStrap: localimage
-From: ./spack-lmod.img
+From: ./spack-singularity.img
 
 %labels
 MAINTAINER baber@iastate.edu
@@ -11,14 +11,10 @@ source /etc/profile.d/modules.sh
 source $SPACK_ROOT/share/spack/setup-env.sh
 
 %runscript
-#bowtie
+module avail
 
 %post
 dnf clean all
-dnf -y install Lmod findutils
-cd /opt/spack && git stash && git checkout feature/fastqvalidator-depfix
-/opt/spack/bin/spack install bowtie
+dnf -y install Lmod 
 source /etc/profile.d/modules.sh
 source /opt/spack/share/spack/setup-env.sh
-#need to change module.yaml so I can just load bowtie without the full version & hash
-module load bowtie-1.2-gcc-7.2.1-m7xhfks 

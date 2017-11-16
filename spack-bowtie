@@ -8,5 +8,4 @@ MAINTAINER baber@iastate.edu
 bowtie
 
 %post
-dnf clean all
 /opt/spack/bin/spack install bowtie

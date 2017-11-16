@@ -14,5 +14,5 @@ source $SPACK_ROOT/share/spack/setup-env.sh
 module avail
 
 %post
-dnf clean all
 dnf -y install Lmod 
+dnf clean all

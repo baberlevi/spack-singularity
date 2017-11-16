@@ -21,15 +21,12 @@ export SPACK_ROOT=/opt/spack
 #even tried hacking on the defaults.py in libexec
 #broke up the dnf installs into chunks, seems to clean up after itself in phases and fits in my small tmp
 #don't think the dnf clean is actually doing anything
-dnf clean all
 dnf -y install git python3 
-dnf clean packages
 dnf -y install gcc gcc-c++ curl 
-dnf clean packages
 dnf -y install gnupg2 sed patch 
-dnf clean packages
 dnf -y install file unzip gzip
-dnf clean packages
+dnf -y install findutils
+dnf clean all
 ln -f -s /usr/bin/python3 /usr/bin/python
 #git clone https://github.com/spack/spack.git $SPACK_ROOT
 git clone https://github.com/researchit/spack.git $SPACK_ROOT

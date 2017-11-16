@@ -5,5 +5,8 @@ From: ./spack-singularity.img
 MAINTAINER baber@iastate.edu
 
 %post
-dnf -y install patch
-/opt/spack/bin/spack install fastme
+dnf -y install gcc-c++
+dnf clean all
+cd /opt/spack && git stash && git checkout feature/fastqvalidator-depfix
+/opt/spack/bin/spack install gcc@4.8.5
+/opt/spack/bin/spack install fastqvalidator%gcc@4.8.5

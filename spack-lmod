@@ -7,13 +7,22 @@ MAINTAINER baber@iastate.edu
 %environment
 export SPACK_ROOT=/opt/spack
 export PATH=$SPACK_ROOT/bin:$PATH
-
-%runscript
-bash -c "$@"
+source $SPACK_ROOT/share/spack/setup-env.sh
 
 %post
 dnf -y install Lmod 
 dnf clean all
-echo "source /etc/profile.d/modules.sh" > /environment
-echo "source /opt/spack/share/spack/setup-env.sh" >> /environment
+echo "source /etc/profile.d/modules.sh" >> /environment
+#echo "source /opt/spack/share/spack/setup-env.sh" >> /environment
+export SPACKMODCONF=/opt/spack/etc/spack/modules.yaml
+echo "modules:\n" >> $SPACKMODCONF
+echo "  enable::" >> $SPACKMODCONF
+echo "    - lmod" >> $SPACKMODCONF
+echo "  lmod:" >> $SPACKMODCONF
+echo "    ^python:" >> $SPACKMODCONF
+echo "      autoload: 'direct'" >> $SPACKMODCONF
+echo "    core_compilers:" >> $SPACKMODCONF
+echo "      - 'gcc@7.2.1'" >> $SPACKMODCONF
+
+
 

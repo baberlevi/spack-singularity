@@ -1,5 +1,5 @@
 BootStrap: localimage
-From: ./spack-lmod.img
+From: ./lmod.Simg
 
 %labels
 MAINTAINER baber@iastate.edu
@@ -9,3 +9,4 @@ bowtie
 
 %post
 /opt/spack/bin/spack install bowtie
+spack clean --all

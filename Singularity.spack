@@ -8,7 +8,6 @@ MAINTAINER baber@iastate.edu
 SPACK_ROOT=/opt/spack
 export SPACK_ROOT
 export PATH=$SPACK_ROOT/bin:$PATH
-#export TMPDIR=/tmp
 
 %runscript
 spack find 
@@ -23,4 +22,7 @@ dnf -y install findutils
 dnf clean all
 ln -f -s /usr/bin/python3 /usr/bin/python
 git clone https://github.com/researchit/spack.git $SPACK_ROOT
-
+cp $SPACK_ROOT/etc/spack/defaults/config.yaml $SPACK_ROOT/etc/spack/
+sed -i '/$spack\/var\/spack\/stage/d' $SPACK_ROOT/etc/spack/config.yaml
+sed -i '/\/nfs\/tmp2\/$user/d' $SPACK_ROOT/etc/spack/config.yaml
+sed -i 's/source_cache: $spack\/var\/spack\/cache/souce_cache: $tempdir/g' $SPACK_ROOT/etc/spack/config.yaml
